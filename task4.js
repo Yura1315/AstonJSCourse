@@ -1,5 +1,3 @@
-const l = console.log;
-
 const getUniqArray = (arr) => {
 	let uniq = new Set();
 	arr.forEach((el) => {
@@ -10,5 +8,3 @@ const getUniqArray = (arr) => {
 	});
 	return Array.from(uniq);
 };
-
-l(getUniqArray(arr));
