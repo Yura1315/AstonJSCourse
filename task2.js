@@ -1,5 +1,3 @@
-const l = console.log;
-
 const getNumberRadix = (number, radix) => {
 	if (
 		isNaN(number) ||
@@ -13,9 +11,3 @@ const getNumberRadix = (number, radix) => {
 	}
 	return String((+number).toString(+radix));
 };
-
-l(getNumberRadix(4, 2));
-l(getNumberRadix('16', 8));
-l(getNumberRadix('Hello', 4));
-l(getNumberRadix(10, 32));
-l(getNumberRadix(10, 'JS'));
