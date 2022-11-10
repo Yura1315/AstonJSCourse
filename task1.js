@@ -1,3 +1,1 @@
-const sum = (a, b) => {
-	return isNaN(a) || isNaN(b) ? 'Не верные аргументы' : (+a + +b).toFixed(1);
-};
+const sum = (a, b) => parseFloat((+a + +b).toFixed(3));
