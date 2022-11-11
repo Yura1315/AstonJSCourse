@@ -23,12 +23,3 @@ function createPerson(name, skills = []) {
 		},
 	};
 }
-
-const wizard = createPerson('Harry Potter', ['magic', 'kindness']);
-wizard.setName('Lord Voldemort');
-wizard.addSkill('strength');
-wizard.addSkill('health');
-wizard.removeSkill('kindness');
-wizard.addSkill('anger');
-wizard.addSkill('anger');
-console.log(wizard);
