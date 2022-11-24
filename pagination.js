@@ -47,7 +47,6 @@ const createLink = (page) => {
 	let a = document.createElement('a');
 	li.classList = 'page-item';
 	a.classList = 'page-link';
-	li.style.cursor = 'pointer';
 	a.textContent = page;
 	li.append(a);
 	if (store.currentPage === page) a.classList.add('active');
@@ -74,14 +73,12 @@ const createArrowLink = () => {
 	liNext.classList.add('page-item');
 	liNext.classList.add('next');
 	aNext.classList.add('page-link');
-	liNext.style.cursor = 'pointer';
 	aNext.textContent = 'next';
 	let liPrev = document.createElement('li');
 	let aPrev = document.createElement('a');
 	liPrev.classList.add('page-item');
 	aPrev.classList.add('page-link');
 	liPrev.classList.add('prev');
-	liPrev.style.cursor = 'pointer';
 	aPrev.textContent = 'prev';
 	liNext.append(aNext);
 	liPrev.append(aPrev);
@@ -141,15 +138,6 @@ const displayCards = (cards) => {
 		card.classList.add('shadow-sm');
 		card.classList.add('card');
 		divWrap.classList.add('col');
-
-		imageCrard.style.width = '100%';
-		imageCrard.style.height = '225px';
-		rect.style.width = '100%';
-		rect.style.height = '100%';
-		imageCrard.style.backgroundColor = '#55595c';
-		title.textContent = 'placeholder';
-		text.style.color = 'white';
-		card.style.height = '450px';
 		text.textContent = `id: ${el.id} - title: ${el.title}`;
 		cardText.textContent = `${el.body}`;
 
