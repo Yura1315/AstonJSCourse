@@ -1,3 +1,6 @@
+let pagination = document.querySelector('.pagination');
+let container = document.querySelector('.content');
+
 const store = {
 	data: [],
 	total: '',
@@ -33,10 +36,10 @@ const saveStore = async (limit, page) => {
 
 const displayPagination = (countPosts, limit) => {
 	let countPages = Math.ceil(countPosts.total / limit);
-	let ul = document.querySelector('.pagination');
 	for (let i = 1; i < countPages + 1; i++) {
-		ul.append(createLink(i));
+		pagination.append(createLink(i));
 	}
+	createArrowLink();
 };
 
 const createLink = (page) => {
@@ -49,11 +52,13 @@ const createLink = (page) => {
 	li.append(a);
 	if (store.currentPage === page) a.classList.add('active');
 	li.addEventListener('click', (e) => {
+		pagination.style.pointerEvents = 'none';
 		if (page !== store.currentPage) {
 			store.currentPage = page;
-			saveStore(10, page);
+			saveStore(store.limit, page);
 			setTimeout(() => {
-				displayCards(store.data, 10);
+				displayCards(store.data, store.limit);
+				pagination.style.pointerEvents = 'all';
 			}, 1000);
 			let active = document.querySelector('.active');
 			active.classList.remove('active');
@@ -63,8 +68,59 @@ const createLink = (page) => {
 	return li;
 };
 
+const createArrowLink = () => {
+	let liNext = document.createElement('li');
+	let aNext = document.createElement('a');
+	liNext.classList.add('page-item');
+	liNext.classList.add('next');
+	aNext.classList.add('page-link');
+	liNext.style.cursor = 'pointer';
+	aNext.textContent = 'next';
+	let liPrev = document.createElement('li');
+	let aPrev = document.createElement('a');
+	liPrev.classList.add('page-item');
+	aPrev.classList.add('page-link');
+	liPrev.classList.add('prev');
+	liPrev.style.cursor = 'pointer';
+	aPrev.textContent = 'prev';
+	liNext.append(aNext);
+	liPrev.append(aPrev);
+	pagination.append(liNext);
+	pagination.prepend(liPrev);
+	let next = document.querySelector('.next');
+	let prev = document.querySelector('.prev');
+	let activeLink = document.querySelectorAll('.page-link');
+
+	next.addEventListener('click', () => {
+		pagination.style.pointerEvents = 'none';
+		if (store.currentPage <= 9) {
+			activeLink[store.currentPage].classList.remove('active');
+			store.currentPage += 1;
+			saveStore(store.limit, store.currentPage);
+			setTimeout(() => {
+				displayCards(store.data, store.limit);
+				pagination.style.pointerEvents = 'all';
+			}, 1000);
+			activeLink[store.currentPage].classList.add('active');
+		}
+	});
+
+	prev.addEventListener('click', () => {
+		pagination.style.pointerEvents = 'none';
+		if (store.currentPage >= 2) {
+			activeLink[store.currentPage].classList.remove('active');
+			store.currentPage = store.currentPage - 1;
+			saveStore(store.limit, store.currentPage);
+			setTimeout(() => {
+				displayCards(store.data, store.limit);
+				pagination.style.pointerEvents = 'all';
+			}, 1000);
+			activeLink[store.currentPage].classList.add('active');
+		}
+	});
+};
+
 const displayCards = (cards) => {
-	let container = document.querySelector('.content');
 	let card = document.querySelectorAll('.col');
 	card.forEach((e) => {
 		e.remove();
@@ -110,11 +166,10 @@ const displayCards = (cards) => {
 
 const displayContent = () => {
 	setTimeout(() => {
-		console.log(store.data);
 		displayPagination(store, store.limit);
 		displayCards(store.data);
 	}, 1000);
 };
 
-saveStore(10, 1);
+saveStore(store.limit, store.currentPage);
 displayContent();
