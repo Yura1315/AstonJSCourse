@@ -6,11 +6,13 @@ function createPerson(name, skills = []) {
 		skills: this.skills,
 		setName: function (newName) {
 			this.name = newName;
+			return this;
 		},
 		addSkill: function (newSkill) {
 			if (!this.skills.includes(newSkill)) {
 				this.skills.push(newSkill);
 			}
+			return this;
 		},
 		removeSkill: function (skill) {
 			let newSkills = [];
@@ -19,6 +21,7 @@ function createPerson(name, skills = []) {
 					newSkills.push(el);
 				}
 				this.skills = newSkills;
+				return this;
 			});
 		},
 	};
