@@ -1,15 +1,18 @@
 const deepCopyObject = (obj) => {
-	let newObj = {};
-	for (key in obj) {
-		if (obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
-			deepCopyObject(obj[key]);
-		} else if (Array.isArray(obj[key])) {
-			let arr = obj[key].map((el, i) => {
-				el = deepCopyObject(el[i]);
-			});
-			newObj[key] = [...arr];
+	const cloneObject = {};
+	for (let key in obj) {
+		if (obj.hasOwnProperty(key)) {
+			if (Array.isArray(obj[key])) {
+				cloneObject[key] = [];
+				obj[key].forEach((el, i) => {
+					cloneObject[key].push(deepCopyObject(el));
+				});
+			} else if (typeof obj[key] === 'object' && !Array.isArray(obj[key]) && obj[key] !== null) {
+				cloneObject[key] = deepCopyObject(obj[key]);
+			} else {
+				cloneObject[key] = obj[key];
+			}
 		}
-		newObj[key] = obj[key];
 	}
-	return newObj;
+	return cloneObject;
 };

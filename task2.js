@@ -17,7 +17,7 @@ const getInterval = (arr, from, to) => {
 			);
 		}
 	});
-	if (from > to) {
+	if (from >= to) {
 		return arr.slice(--to, from);
 	}
 	return arr.slice(--from, to);
